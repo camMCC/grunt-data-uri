@@ -28,7 +28,8 @@ module.exports = function(grunt) {
   }
 
   grunt.registerMultiTask('dataUri', 'Convert your css file image path!!', function() {
-
+	var originalCWD = process.cwd();
+	
     var options  = this.options(),
         srcFiles = expandFiles(this.data.src),
         destDir  = path.resolve(this.data.dest),
@@ -113,7 +114,9 @@ module.exports = function(grunt) {
       });
 
       // Revert base to gruntjs executing current dir
-      grunt.file.setBase(gruntfileDir);
+      process.chdir(originalCWD);
+      grunt.log.writeln(process.cwd());
+      //grunt.file.setBase(gruntfileDir);
       grunt.file.write(outputTo, content);
       grunt.log.ok('=> ' + outputTo);
     });
